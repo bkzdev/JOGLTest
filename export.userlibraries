@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <eclipse-userlibraries version="2">
     <library name="GlueGen" systemlibrary="false">
-        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jdoc/gluegen-javadoc.7z!/" path="/JOGLTest/lib/jar/gluegen-rt.jar" source="/JOGLTest/lib/src/gluegen-java-src.zip"/>
+        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jogamp-all-platforms/jdoc/gluegen-javadoc.7z!/" path="/JOGLTest/lib/jogamp-all-platforms/jar/gluegen-rt.jar" source="/JOGLTest/lib/jogamp-all-platforms/gluegen-java-src.zip"/>
     </library>
     <library name="JOGL" systemlibrary="false">
-        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jdoc/jogl-javadoc.7z!/" path="/JOGLTest/lib/jar/jogl-all.jar" source="/JOGLTest/lib/src/jogl-java-src.zip"/>
-        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jdoc/jogl-javadoc.7z!/" path="/JOGLTest/lib/jar/jogl-all-noawt.jar" source="/JOGLTest/lib/src/jogl-java-src.zip"/>
+        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jogamp-all-platforms/jdoc/jogl-javadoc.7z!/" path="/JOGLTest/lib/jogamp-all-platforms/jar/jogl-all.jar" source="/JOGLTest/lib/jogamp-all-platforms/jogl-java-src.zip"/>
+        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jogamp-all-platforms/jdoc/jogl-javadoc.7z!/" path="/JOGLTest/lib/jogamp-all-platforms/jar/jogl-all-noawt.jar" source="/JOGLTest/lib/jogamp-all-platforms/jogl-java-src.zip"/>
     </library>
     <library name="nazo" systemlibrary="false">
-        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jdoc/gluegen-javadoc.7z!/" path="/JOGLTest/lib/jar/gluegen-rt-natives-windows-i586.jar" source="/JOGLTest/lib/src/gluegen-java-src.zip"/>
-        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jdoc/joal-javadoc.7z!/" path="/JOGLTest/lib/jar/joal-natives-windows-i586.jar" source="/JOGLTest/lib/src/joal-java-src.zip"/>
+        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jogamp-all-platforms/jdoc/gluegen-javadoc.7z!/" path="/JOGLTest/lib/jogamp-all-platforms/jar/gluegen-rt-natives-windows-i586.jar" source="/JOGLTest/lib/jogamp-all-platforms/gluegen-java-src.zip"/>
+        <archive javadoc="jar:platform:/resource/JOGLTest/lib/jogamp-all-platforms/jdoc/joal-javadoc.7z!/" path="/JOGLTest/lib/jogamp-all-platforms/jar/joal-natives-windows-i586.jar" source="/JOGLTest/lib/jogamp-all-platforms/joal-java-src.zip"/>
     </library>
 </eclipse-userlibraries>
