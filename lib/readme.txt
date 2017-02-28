@@ -8,3 +8,15 @@ http://jogamp.org/
 http://jogamp.org/
 のBuilds/Downloadsのzipにある7zを解凍して置く
 JDocも解凍せずに置く
+
+◆ユーザーライブラリのインポート
+Eclipseのウィンドウ→設定のJava→ビルドパス→ユーザーライブラリーのインポートで
+export.userlibrariesをインポートする
+
+※インポートできない場合は以下のライブラリを作る
+GlueGen
+gluegen-rt.jar
+
+JOGL
+jogl-all.jar
+jogl-all-noawt.jar
