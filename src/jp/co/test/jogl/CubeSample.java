@@ -22,7 +22,7 @@ import static com.jogamp.opengl.GL2.*;
 public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 
 	float[][] vertex = {
-			{ 0.0f, 0.0f, 0.0f },	//ABBCC
+			{ 0.0f, 0.0f, 0.0f },	//A
 			{ 1.0f, 0.0f, 0.0f },	//B
 			{ 1.0f, 1.0f, 0.0f },	//C
 			{ 0.0f, 1.0f, 0.0f },	//D
@@ -30,6 +30,16 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 			{ 1.0f, 0.0f, 1.0f },	//F
 			{ 1.0f, 1.0f, 1.0f },	//G
 			{ 0.0f, 1.0f, 1.0f }	//H
+	};
+	
+	//8.1 多面体を塗りつぶす
+	private final int face[][] = {
+			{ 0, 1, 2, 3 },		//A-B-C-Dを結ぶ面
+			{ 1, 5, 6, 2 },		//B-F-G-Cを結ぶ面
+			{ 5, 4, 7, 6 },		//F-E-H-Gを結ぶ面
+			{ 4, 0, 3, 7 },		//E-A-D-Hを結ぶ面
+			{ 4, 5, 1, 0 },		//E-F-B-Aを結ぶ面
+			{ 3, 2, 6, 7 }		//D-C-G-Hを結ぶ面
 	};
 
 	int[][] edge = {
@@ -48,13 +58,15 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 	};
 
 	private final GLU glu;
+	//8.1 多面体を塗りつぶす
+	private final FPSAnimator animator;
 	//7.1 図形を動かす
-	private final Animator animator;
+	//private final Animator animator;
 	private final GLWindow glWindow;
 	private boolean willAnimatorPause = false;
 	private static final char KEY_ESC = 0x1b;
 
-	float r = 0;
+	float r = 0;	//回転角
 
 	public CubeSample(){
 		GLCapabilities caps = new GLCapabilities(GLProfile.get(GLProfile.GL2));
@@ -73,28 +85,12 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 
 		glWindow.addMouseListener(this);
 		glWindow.addKeyListener(this);
-		animator = new Animator();
+		//8.1 多面体を塗りつぶす
+		animator = new FPSAnimator(30);
+		//animator = new Animator();
 		animator.add(glWindow);
 		animator.start();
 		animator.pause();
-		glWindow.setVisible(true);
-	}
-
-	public void CubeSampleOld(){
-		GLCapabilities caps = new GLCapabilities(GLProfile.get(GLProfile.GL2));
-		GLWindow glWindow = GLWindow.create(caps);
-//		glu = new GLU();
-		glWindow.setTitle("Cube demo (Newt)");
-		glWindow.setSize(300, 300);
-		glWindow.addWindowListener(new WindowAdapter(){
-			public void windowDestroyed(WindowEvent evt){
-				System.exit(0);
-			}
-		});
-		glWindow.addGLEventListener(this);
-		FPSAnimator animator = new FPSAnimator(10);
-		animator.add(glWindow);
-		animator.start();
 		glWindow.setVisible(true);
 	}
 
@@ -106,16 +102,23 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 
 		//7.1 図形を動かす
 		gl.glLoadIdentity();
-		gl.glTranslatef(0.5f, 0.5f, 0.5f);
+		gl.glTranslatef(0.5f, 0.5f, 0.5f);	//回転
 		gl.glRotatef(r, 0.0f, 1.0f, 0.0f);
 		gl.glTranslatef(-0.5f, -0.5f, -0.5f);
-		gl.glColor3f(0.0f, 0.0f, 0.0f);
 
-		gl.glBegin(GL_LINES);
-		for(int i=0;i<12;i++){
-			gl.glVertex3fv(vertex[edge[i][0]], 0);
-			gl.glVertex3fv(vertex[edge[i][1]], 0);
+		gl.glColor3f(0.0f, 0.0f, 0.0f);		//描写
+		//8.1 多面体を塗りつぶす
+		gl.glBegin(GL_QUADS);
+		for(int j=0; j<6;++j){
+			for(int i=0; i<4;++i){
+				gl.glVertex3fv(vertex[face[j][i]], 0);
+			}
 		}
+		//gl.glBegin(GL_LINES);
+		//for(int i=0;i<12;i++){
+		//	gl.glVertex3fv(vertex[edge[i][0]], 0);
+		//	gl.glVertex3fv(vertex[edge[i][1]], 0);
+		//}
 		gl.glEnd();
 
 		//7.1 図形を動かす
@@ -136,7 +139,7 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 
 	public void init(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
-		gl.glClearColor(1f, 1f, 1f, 1.0f);
+		gl.glClearColor(1f, 1f, 1f, 1.0f);	//白で塗りつぶす
 
 		//7.2 ダブルバッファリング
 		System.out.println("auto swap:"+drawable.getAutoSwapBufferMode());
