@@ -56,6 +56,16 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 			{ 2, 6},	//サ(C-G)
 			{ 3, 7}		//シ(D-H)
 	};
+	
+	//8.1 多面体を塗りつぶす
+	private final float color[][] = {
+			{ 1.0f, 0.0f, 0.0f },	//赤
+			{ 0.0f, 1.0f, 0.0f },	//緑
+			{ 0.0f, 0.0f, 1.0f },	//青
+			{ 1.0f, 1.0f, 0.0f },	//黄
+			{ 1.0f, 0.0f, 1.0f },	//マゼンタ
+			{ 0.0f, 1.0f, 1.0f }	//シアン
+	};
 
 	private final GLU glu;
 	//8.1 多面体を塗りつぶす
@@ -98,7 +108,9 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 		//7.3 Animatorとスレッド
 		dumpThread("display");
 		GL2 gl = drawable.getGL().getGL2();
-		gl.glClear(GL_COLOR_BUFFER_BIT);
+		// 8.2 デプスバッファ
+		gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//		gl.glClear(GL_COLOR_BUFFER_BIT);
 
 		//7.1 図形を動かす
 		gl.glLoadIdentity();
@@ -106,10 +118,11 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 		gl.glRotatef(r, 0.0f, 1.0f, 0.0f);
 		gl.glTranslatef(-0.5f, -0.5f, -0.5f);
 
-		gl.glColor3f(0.0f, 0.0f, 0.0f);		//描写
+		//gl.glColor3f(0.0f, 0.0f, 0.0f);		//描写
 		//8.1 多面体を塗りつぶす
 		gl.glBegin(GL_QUADS);
 		for(int j=0; j<6;++j){
+			gl.glColor3fv(color[j],0);
 			for(int i=0; i<4;++i){
 				gl.glVertex3fv(vertex[face[j][i]], 0);
 			}
@@ -140,6 +153,11 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 	public void init(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
 		gl.glClearColor(1f, 1f, 1f, 1.0f);	//白で塗りつぶす
+		// 8.2 デプスバッファ
+		gl.glEnable(GL_DEPTH_TEST);
+		// 8.3 カリング
+		gl.glEnable(GL_CULL_FACE);
+		gl.glCullFace(GL_FRONT);
 
 		//7.2 ダブルバッファリング
 		System.out.println("auto swap:"+drawable.getAutoSwapBufferMode());
