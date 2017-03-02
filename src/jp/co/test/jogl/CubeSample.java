@@ -1,5 +1,9 @@
 package jp.co.test.jogl;
 
+import static com.jogamp.opengl.GL.*;
+import static com.jogamp.opengl.GL2ES3.*;
+import static com.jogamp.opengl.fixedfunc.GLMatrixFunc.*;
+
 import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.KeyListener;
 import com.jogamp.newt.event.MouseEvent;
@@ -7,18 +11,20 @@ import com.jogamp.newt.event.MouseListener;
 import com.jogamp.newt.event.WindowAdapter;
 import com.jogamp.newt.event.WindowEvent;
 import com.jogamp.newt.opengl.GLWindow;
-import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import static com.jogamp.opengl.GL2.*;
-
+/**
+ * @author nagata
+ * http://toruwest.github.io/jogl-tutorial-document/<br>
+ * 8.3まで<br>
+ * 立方体であそぼう
+ */
 public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 
 	float[][] vertex = {
@@ -31,7 +37,7 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 			{ 1.0f, 1.0f, 1.0f },	//G
 			{ 0.0f, 1.0f, 1.0f }	//H
 	};
-	
+
 	//8.1 多面体を塗りつぶす
 	private final int face[][] = {
 			{ 0, 1, 2, 3 },		//A-B-C-Dを結ぶ面
@@ -56,7 +62,7 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 			{ 2, 6},	//サ(C-G)
 			{ 3, 7}		//シ(D-H)
 	};
-	
+
 	//8.1 多面体を塗りつぶす
 	private final float color[][] = {
 			{ 1.0f, 0.0f, 0.0f },	//赤
