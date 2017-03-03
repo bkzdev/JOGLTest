@@ -3,6 +3,7 @@ package jp.co.test.jogl;
 import static com.jogamp.opengl.GL.*;
 import static com.jogamp.opengl.GL2ES3.*;
 import static com.jogamp.opengl.fixedfunc.GLMatrixFunc.*;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.*;
 
 import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.KeyListener;
@@ -22,7 +23,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 /**
  * @author nagata
  * http://toruwest.github.io/jogl-tutorial-document/<br>
- * 8.3まで<br>
+ * 9.1まで<br>
  * 立方体であそぼう
  */
 public class CubeSample implements GLEventListener, MouseListener, KeyListener {
@@ -71,6 +72,16 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 			{ 1.0f, 1.0f, 0.0f },	//黄
 			{ 1.0f, 0.0f, 1.0f },	//マゼンタ
 			{ 0.0f, 1.0f, 1.0f }	//シアン
+	};
+	
+	//9.1 光を当ててみる
+	private final float normal[][] = {
+			{  0.0f,  0.0f, -1.0f },
+			{  1.0f,  0.0f,  0.0f },
+			{  0.0f,  0.0f,  1.0f },
+			{ -1.0f,  0.0f,  0.0f },
+			{  0.0f, -1.0f,  0.0f },
+			{  0.0f,  1.0f,  0.0f }
 	};
 
 	private final GLU glu;
@@ -128,7 +139,9 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 		//8.1 多面体を塗りつぶす
 		gl.glBegin(GL_QUADS);
 		for(int j=0; j<6;++j){
-			gl.glColor3fv(color[j],0);
+			//9.1 光を当ててみる
+			gl.glNormal3fv(normal[j], 0);
+			//gl.glColor3fv(color[j],0);
 			for(int i=0; i<4;++i){
 				gl.glVertex3fv(vertex[face[j][i]], 0);
 			}
@@ -164,6 +177,12 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 		// 8.3 カリング
 		gl.glEnable(GL_CULL_FACE);
 		gl.glCullFace(GL_FRONT);
+		//9.1 光を当ててみる
+		gl.glCullFace(GL_FRONT);
+		gl.glEnable(GL_LIGHTING);
+		gl.glEnable(GL_LIGHT0);
+		gl.glEnable(GL_LIGHT1);
+		
 
 		//7.2 ダブルバッファリング
 		System.out.println("auto swap:"+drawable.getAutoSwapBufferMode());
