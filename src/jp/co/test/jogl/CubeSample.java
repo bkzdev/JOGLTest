@@ -93,6 +93,14 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 	private boolean willAnimatorPause = false;
 	private static final char KEY_ESC = 0x1b;
 
+	//9.2 光源を設定する
+	private final float[] light0pos = {0.0f, 3.0f, 5.0f, 1.0f};
+	private final float[] light1pos = {5.0f, 3.0f, 0.0f, 1.0f};
+	private final float[] green = {0.0f, 1.0f, 0.0f, 1.0f};
+	//9.3 材質を設定する
+	private final float[] red = {0.8f, 0.2f, 0.2f, 1.0f};
+	
+
 	float r = 0;	//回転角
 
 	public CubeSample(){
@@ -131,10 +139,20 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 
 		//7.1 図形を動かす
 		gl.glLoadIdentity();
+		
+		//9.2 光源を設定する
+		glu.gluLookAt(3.0f, 4.0f, 5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		gl.glLightfv(GL_LIGHT0, GL_POSITION, light0pos, 0);
+		gl.glLightfv(GL_LIGHT1, GL_POSITION, light1pos, 0);
+
+		//7.1 図形を動かす
 		gl.glTranslatef(0.5f, 0.5f, 0.5f);	//回転
 		gl.glRotatef(r, 0.0f, 1.0f, 0.0f);
 		gl.glTranslatef(-0.5f, -0.5f, -0.5f);
 
+		//9.3 材質を設定する
+		gl.glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red, 0);
+		
 		//gl.glColor3f(0.0f, 0.0f, 0.0f);		//描写
 		//8.1 多面体を塗りつぶす
 		gl.glBegin(GL_QUADS);
@@ -182,7 +200,9 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 		gl.glEnable(GL_LIGHTING);
 		gl.glEnable(GL_LIGHT0);
 		gl.glEnable(GL_LIGHT1);
-		
+		//9.2 光源を設定する
+		gl.glLightfv(GL_LIGHT1, GL_DIFFUSE, green, 0);
+		gl.glLightfv(GL_LIGHT1, GL_SPECULAR, green, 0);
 
 		//7.2 ダブルバッファリング
 		System.out.println("auto swap:"+drawable.getAutoSwapBufferMode());
@@ -201,7 +221,8 @@ public class CubeSample implements GLEventListener, MouseListener, KeyListener {
 		glu.gluPerspective(30.0, (double)width/(double)height, 1.0, 100.0);
 		//gl.glTranslatef(0.0f, 0.0f, -5.0f);
 		//6.4 視点の位置変更
-		glu.gluLookAt(5.0f, 5.0f, 5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		//9.2 光源を設定する
+		//glu.gluLookAt(5.0f, 5.0f, 5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
 		gl.glMatrixMode(GL_MODELVIEW);
 	}
